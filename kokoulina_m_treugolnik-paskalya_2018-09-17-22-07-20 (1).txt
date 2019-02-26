@@ -1,0 +1,71 @@
+import java.util.Scanner;
+/**
+ * Created by LocalUser on 17.09.2018.
+ */
+public class MyFirstClass {
+    public static void PrintMas(int[][] mas, int N){
+        for (int i=0; i<N; i++)
+        {
+            for (int j=0; j<=i;j++){
+                System.out.print(mas[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+    public static void TrianMas(int N){
+        int[][] mas=new int[N][N];
+        for (int i=0; i<N; i++)
+        {
+            for (int j=0; j<N;j++){
+                mas[i][j]=0;
+            }
+        }
+        for (int i=0; i<N; i++)
+        {
+            for (int j=0; j<=i;j++){
+                if ((j==0)||(i==j))
+                    mas[i][j]=1;
+                else {
+                    mas[i][j] =mas[i-1][j-1]+mas[i-1][j];
+                }
+            }
+        }
+        PrintMas(mas, N);
+    }
+
+    public static int Recurs(int N, int now, int i, int j){
+        if (now!=N) {
+            if (((j == 0) || (i == j))) return 1;
+            else return Recurs(N, now-1, i - 1, j - 1) + Recurs(N, now-1,i - 1, j);
+        }
+        else {
+                if ((N > 1) && (j == i))
+                {
+                    Recurs(N - 1, N - 1, i-1, 0);
+                }
+                else if (N > 1)
+                {
+                    Recurs(N, N, i, j+1);
+                }
+                if (((j == 0) || (j == i))) System.out.print(1 + " ");
+                else {
+                    int x = Recurs(N, now - 1, i - 1, j - 1) + Recurs(N, now - 1, i - 1, j);
+                    System.out.print(x + " ");
+            }
+            if (j == 0) System.out.println();
+            return 0;
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner readlines=new Scanner(System.in);
+        int N=readlines.nextInt();
+	if (N>0){
+        TrianMas(N);
+	System.out.println();
+	Recurs(N, N, N-1, 0);
+	}
+
+    }
+}
